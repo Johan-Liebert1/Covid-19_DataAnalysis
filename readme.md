@@ -29,15 +29,15 @@ Download the Data and the Notebook to view any statistic for any country of your
 # Country Data
 
 ### 1. Certain data for many countries line plot
-![image](demoimages\1_certain_data_for_countries.png)
+![image](/demoimages/1_certain_data_for_countries.png)
 
 ### 2. Certain data for many countries bar plot
-![image](demoimages\2_certain_data_for_countries_bar.png)
+![image](/demoimages/2_certain_data_for_countries_bar.png)
 
 
-### 2. All Data for a country
+### 3. All Data for a country
 *line plot also available*
-![image](demoimages\3_all_data_for_a_country.png)
+![image](/demoimages/3_all_data_for_a_country.png)
 
 
 # Pie Chart
