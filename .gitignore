@@ -1,8 +1,10 @@
 .ipynb_checkpoints/
 *.csv
 __pycache__/
+backend/__pycache__
 untitled.ipynb
 .vscode/
+endpoints.txt
 
 # dependencies
 frontend/node_modules/

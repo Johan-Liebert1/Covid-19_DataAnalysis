@@ -6,6 +6,7 @@ def get_country_df(country):
     df.columns = [i.strip() for i in df.columns]
     df.rename(columns={'Date_reported' : 'Date'}, inplace = True)
     df['Date'] = pd.to_datetime(df['Date'])
+    df['Country'] = df['Country'].apply(lambda x: x.lower())
     country_groups = df.groupby('Country')
     country_df = country_groups.get_group(country)
     return country_df
@@ -36,19 +37,19 @@ def get_country_dictionary(countries, plot):
     country_dictionary = {}
     
     for i in countries:
-        if plot.lower() == "new cases":
+        if plot.lower() == "new_cases":
             country_dictionary[i] = get_cases(i)
             
         
-        elif plot.lower() == 'total cases':
+        elif plot.lower() == 'total_cases':
             country_dictionary[i] = get_cases(i, 'Cumulative_cases')
                 
             
-        elif plot.lower() == 'new deaths':
+        elif plot.lower() == 'new_deaths':
             country_dictionary[i] = get_deaths(i)
             
             
-        elif plot.lower() == 'total deaths':
+        elif plot.lower() == 'total_deaths':
             country_dictionary[i] = get_deaths(i, 'Cumulative_deaths') 
                 
        
@@ -56,5 +57,4 @@ def get_country_dictionary(countries, plot):
         key: country_dictionary[key] 
         for key in sorted(country_dictionary, key = lambda k: len(country_dictionary[k]))
     }
-        
     return country_dictionary
