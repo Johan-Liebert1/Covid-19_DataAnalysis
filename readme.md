@@ -35,7 +35,7 @@ Download the Data and the Notebook to view any statistic for any country of your
 ![image](Notebooks\demoimages\2_certain_data_for_countries_bar.png)
 
 
-### 2. All Data for a country
+### 3. All Data for a country
 *line plot also available*
 ![image](Notebooks\demoimages\3_all_data_for_a_country.png)
 
