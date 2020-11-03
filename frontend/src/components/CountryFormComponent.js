@@ -83,7 +83,7 @@ const CountryFormComponent = () => {
                     }}
                 >
                     {
-                        plotType.map(p => <option style = {{
+                        plotType.map((p, i) => <option key = {i} style = {{
                             backgroundColor: 'rgb(14, 22, 29)',
                             color: "white"
                         }}>{p}</option>)
@@ -115,7 +115,8 @@ const CountryFormComponent = () => {
         {
             showImage && 
             <img 
-                src = {`/getdata/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                src = {`/plotdata/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                 style= { mapping[pws] === 'all' ? imageStyle : {} }
             />
         }

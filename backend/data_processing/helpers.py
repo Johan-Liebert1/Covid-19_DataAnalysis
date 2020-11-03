@@ -1,12 +1,19 @@
 import pandas as pd
+import numpy as np
 
-def get_country_df(country):
+def get_df():
     df = pd.read_csv('data/WHO-COVID-19-global-data.csv')
 
     df.columns = [i.strip() for i in df.columns]
     df.rename(columns={'Date_reported' : 'Date'}, inplace = True)
+
     df['Date'] = pd.to_datetime(df['Date'])
     df['Country'] = df['Country'].apply(lambda x: x.lower())
+
+    return df
+
+def get_country_df(country):
+    df = get_df()
     country_groups = df.groupby('Country')
     country_df = country_groups.get_group(country)
     return country_df
@@ -58,3 +65,19 @@ def get_country_dictionary(countries, plot):
         for key in sorted(country_dictionary, key = lambda k: len(country_dictionary[k]))
     }
     return country_dictionary
+
+
+def get_sum_col(col = 'New_cases'):
+    
+    df = get_df()
+    
+    dates = df['Date'].unique()
+    
+    date_groups = df.groupby('Date')
+    
+    lst = []
+    
+    for date in dates:
+        lst.append(date_groups.get_group(date)[col].sum())
+        
+    return np.array(dates), np.array(lst)

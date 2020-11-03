@@ -1,0 +1,10 @@
+#plots {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.single-plot {
+    margin: 1rem 0;
+}
