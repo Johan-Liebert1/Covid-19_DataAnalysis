@@ -1,12 +1,12 @@
 import './App.css';
 import React, { useState } from 'react' 
-import FormComponent from './components/FormComponent';
+import CountryScreen from './screens/CountryScreen';
 
 function App() {
 
     return (
-        <div className="container">
-            <FormComponent />
+        <div>
+            <CountryScreen />
         </div>
     );
 }

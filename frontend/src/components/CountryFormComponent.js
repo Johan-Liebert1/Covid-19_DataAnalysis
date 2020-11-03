@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { countries, plotType, plotWhat, mapping } from "../constants";
 
-const FormComponent = () => {
+const CountryFormComponent = () => {
     
     const [c, setC] = useState('')
     const [pws, setPws] = useState('')
@@ -12,16 +12,25 @@ const FormComponent = () => {
     const [plotTypeState, setPlotTypeState] = useState(plotType[0])
     const [showImage, setShowImage] = useState(false)
 
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+
     const submitHandler = (e) => {
         e.preventDefault()
         setShowImage(true)
+        setC(country.toLowerCase())
         setPws(plotWhatState)
         setPts(plotTypeState)  
     }
 
+    const imageStyle = {
+        width: windowWidth * 0.95, height: windowHeight *0.95 
+    }
+
     return (
-        <>
-        <form onSubmit = {submitHandler} className = 'mb-5'>
+        <div style = {{ width: '100%' }}>
+
+        <form onSubmit = {submitHandler} className = 'mb-5 container'>
         <div className = 'form-row'>
             <div className = 'form-group col-md-5'>
                 <label htmlFor='country'>Select Country</label>
@@ -90,14 +99,30 @@ const FormComponent = () => {
         </div>
         
         </form>
+        
+
+        <div style = {{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            marginBottom: '3rem'
+            }}>
+        {
+            mapping[pws] === 'all' && 
+            <h1 style={{color: 'white', margin: '2rem auto'}}>Stats for {c.toUpperCase()}</h1>
+        }
 
         {
             showImage && 
             <img 
-                src = {`/getdata/${country}/${mapping[pws]}/${mapping[pts]}`} />
+                src = {`/getdata/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                style= { mapping[pws] === 'all' ? imageStyle : {} }
+            />
         }
-        </>
+        </div>
+
+        </div>
     )
 }
 
-export default FormComponent
+export default CountryFormComponent

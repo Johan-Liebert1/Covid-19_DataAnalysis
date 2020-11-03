@@ -112,3 +112,51 @@ def plot_country_data(fig, ax1, countries, plot = 'new_cases', plot_type = 'line
 
     return filepath, maximum
 
+
+
+def plot_all_data_for_a_country(fig, all_axes, country, plot_type = 'line'):
+    if not isinstance(country, str):
+        raise ValueError("Please input only one country as a string.")
+    
+    # the below variables are data frames
+    
+    new_cases = get_cases(country)['New_cases']
+    total_cases = get_cases(country, how = 'Cumulative_cases')['Cumulative_cases']
+    new_deaths = get_deaths(country)['New_deaths']
+    total_deaths = get_deaths(country, how = 'Cumulative_deaths')['Cumulative_deaths']
+
+    
+    dates = [new_cases.index, total_cases.index, new_deaths.index, total_deaths.index]
+    to_plot = [new_cases, total_cases, new_deaths, total_deaths]
+    labels = ['New Cases / Day', 'Total Cases', 'New Deaths / Day', 'Total Deaths']
+
+    
+    ((ax1, ax2), (ax3, ax4)) = all_axes
+        
+    axes = [ax1, ax2, ax3, ax4]
+
+    colori = 0
+
+    for index, axis in enumerate(axes):
+        axis.set_title(labels[index])
+        axis.tick_params(axis='x', rotation=35)
+        axis.set_xlabel("Month of 2020")
+        y = labels[index].split('/')[0]
+        axis.set_ylabel(y)
+        
+        if plot_type == 'line':
+            axis.plot(dates[index], to_plot[index], color = COLORS[colori])
+            
+        if plot_type == 'bar':
+            axis.bar(dates[index], to_plot[index], color = COLORS[colori], width = 0.75)
+            
+        colori = 0 if (colori + 1 == len(COLORS)) else (colori + 1)
+    
+    fig.tight_layout(pad = 3.0)
+
+    backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    os.makedirs(os.path.join(backend_dir, 'temp'), exist_ok=True)
+    filepath = os.path.join(backend_dir, 'temp', f"{country}-all.png")
+    fig.savefig(filepath)
+
+    return filepath

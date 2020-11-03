@@ -2,6 +2,7 @@ export const countries = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa',
 
 
 export const plotWhat = [
+    "Plot All Stats",
     "New Cases Reported/Day",
     "Total Cases Reported",
     "New Deaths Reported/Day",
@@ -20,5 +21,6 @@ export const mapping = {
     "New Deaths Reported/Day": 'new_deaths',
     "Total Deaths Reported": 'total_deaths',
     "Line Plot": 'line',
-    "Bar Plot": 'bar'
+    "Bar Plot": 'bar',
+    "Plot All Stats": 'all'
 }
