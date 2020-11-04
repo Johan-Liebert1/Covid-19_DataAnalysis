@@ -8,14 +8,7 @@ const CountryScreen = () => {
 
     return (
         <div style = {mainStyle} >
-        {/* //     <div> 
-        //         style = {{ textAlign: 'center' }}
-        //         className = 'mb-5' 
-        //     >
-        //         <h1>Plot Country Data</h1>
-        //     </div> */}
-
-        <NavbarComponent />
+            <NavbarComponent />
 
             <CountryFormComponent />
         </div>

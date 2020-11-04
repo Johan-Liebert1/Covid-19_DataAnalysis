@@ -45,14 +45,27 @@ def country_plot(country, data, plot_type):
 
 @app.route('/plotdata/global/<string:data>/<string:plot_type>')
 def global_plot(data, plot_type):
-    fig, (ax) = plt.subplots(1,1, figsize=(10, 5))
 
-    filename = plot_global_data(
-        fig = fig, 
-        axis = ax,
-        plot = data,
-        plot_type = plot_type
-    )
+    if data != 'all':
+        fig, axes = plt.subplots(1,1, figsize=(10, 5))
+
+        filename = plot_global_data(
+            fig = fig, 
+            all_axes = axes,
+            plot = data,
+            plot_type = plot_type
+        )
+    
+    else:
+        fig, axes = plt.subplots(2,2, figsize=(20, 10))
+
+        filename = plot_global_data(
+            fig = fig, 
+            all_axes = axes,
+            plot = data,
+            plot_type = plot_type,
+            plot_all = True
+        )
 
     return send_file(filename, mimetype='image/gif'), 200
 
@@ -62,5 +75,4 @@ def global_plot(data, plot_type):
 if __name__ == "__main__":
     from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country
     from data_processing.globalDataPlot import plot_global_data
-    from data_processing.constants import mpl_config
     app.run(debug = True, threaded = True)

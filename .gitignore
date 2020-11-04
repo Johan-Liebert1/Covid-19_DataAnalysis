@@ -5,6 +5,7 @@ backend/__pycache__
 untitled.ipynb
 .vscode/
 endpoints.txt
+backend/temp/
 
 # dependencies
 frontend/node_modules/
