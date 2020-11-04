@@ -1,18 +1,14 @@
 import React from 'react'
-
 import CountryFormComponent from '../components/CountryFormComponent'
 import NavbarComponent from '../components/NavbarComponent'
 
-const CountryScreen = () => {
-    const mainStyle = { width: '100%' }
-
+const ContinentScreen = () => {
     return (
-        <div style = {mainStyle} >
+        <div>
             <NavbarComponent />
-
-            <CountryFormComponent isCountry />
+            <CountryFormComponent isCountry = {false} />
         </div>
     )
 }
 
-export default CountryScreen
+export default ContinentScreen

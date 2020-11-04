@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { countries, plotType, plotWhat, mapping } from "../constants";
+import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
-const CountryFormComponent = () => {
+const CountryFormComponent = ({ isCountry }) => {
     
     const [c, setC] = useState('')
     const [pws, setPws] = useState('')
@@ -32,24 +32,47 @@ const CountryFormComponent = () => {
 
         <form onSubmit = {submitHandler} className = 'mb-5 container'>
         <div className = 'form-row'>
-            <div className = 'form-group col-md-5'>
-                <label htmlFor='country'>Select Country</label>
-                <select 
-                    className = 'form-control'
-                    onChange = {(e) => setCountry(e.target.value)}
-                    style = {{
-                        backgroundColor: "transparent",
-                        color: 'white'
-                    }}
-                >
-                    {
-                        countries.map((country, index) => <option key = {index} style = {{
-                            backgroundColor: 'rgb(14, 22, 29)',
-                            color: "white"
-                        }}>{country}</option>)
-                    }
-                </select>
-            </div>
+                { isCountry ?
+                    <div className = 'form-group col-md-5'>
+
+                        <label htmlFor='country'>Select Country</label>
+                        <select 
+                            className = 'form-control'
+                            onChange = {(e) => setCountry(e.target.value)}
+                            style = {{
+                                backgroundColor: "transparent",
+                                color: 'white'
+                            }}
+                        >
+                            {
+                                countries.map((country, index) => <option key = {index} style = {{
+                                    backgroundColor: 'rgb(14, 22, 29)',
+                                    color: "white"
+                                }}>{country}</option>)
+                            }
+                        </select>
+                    </div>
+                : 
+                    <div className = 'form-group col-md-5'>
+
+                        <label htmlFor='country'>Select Continent</label>
+                        <select 
+                            className = 'form-control'
+                            onChange = {(e) => setCountry(e.target.value)}
+                            style = {{
+                                backgroundColor: "transparent",
+                                color: 'white'
+                            }}
+                        >
+                            {
+                                continents.map((cont, index) => <option key = {index} style = {{
+                                    backgroundColor: 'rgb(14, 22, 29)',
+                                    color: "white"
+                                }}>{cont}</option>)
+                            }
+                        </select>
+                    </div>
+                }
 
             <div className = 'form-group col-md-3'>
                 <label htmlFor='country'>Select Plot</label>

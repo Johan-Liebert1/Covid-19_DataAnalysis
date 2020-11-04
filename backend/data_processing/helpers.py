@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from data_processing.continents_and_countries import mapping
+from data_processing.constants import column_name
 
 def get_df():
     df = pd.read_csv('data/WHO-COVID-19-global-data.csv')
@@ -81,3 +83,29 @@ def get_sum_col(col = 'New_cases'):
         lst.append(date_groups.get_group(date)[col].sum())
         
     return np.array(dates), np.array(lst)
+
+
+
+def get_continent_data(continent, plot = 'new_cases'):
+    df = get_df()
+    
+    countries = df['Country']
+
+    conts = [mapping[c] if c in mapping else 'NA' for c in countries]
+
+    df['Continent'] = conts
+        
+    cont_df = df.groupby('Continent').get_group(continent)
+    
+    col = column_name[plot]
+    
+    lst = []
+        
+    dates = cont_df['Date'].unique()
+    
+    date_group = cont_df.groupby('Date')
+    
+    for date in dates:
+        lst.append(date_group.get_group(date)[col].sum())
+    
+    return dates, lst

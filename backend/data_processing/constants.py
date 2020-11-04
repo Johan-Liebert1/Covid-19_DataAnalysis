@@ -11,10 +11,10 @@ COLORS = [
 ]
 
 column_name = {
-    'new cases' : 'New_cases',
-    'total cases' : "Cumulative_cases",
-    'new deaths' : 'New_deaths',
-    'total deaths' : 'Cumulative_deaths',
+    'new_cases' : 'New_cases',
+    'total_cases' : "Cumulative_cases",
+    'new_deaths' : 'New_deaths',
+    'total_deaths' : 'Cumulative_deaths',
 }
 
 mpl_config = {

@@ -24,3 +24,7 @@ export const mapping = {
     "Bar Plot": 'bar',
     "Plot All Stats": 'all'
 }
+
+export const continents = [
+    "Asia", 'Africa', "North America", "South America", "Europe", "Australia"
+]
