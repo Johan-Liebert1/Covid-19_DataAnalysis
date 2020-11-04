@@ -1,9 +1,9 @@
-from matplotlib import pyplot as plt
+import matplotlib as mpl
 import numpy as np
 import os
 
 from data_processing.helpers import get_country_dictionary, get_cases, get_deaths
-from data_processing.constants import COLORS
+from data_processing.constants import COLORS, mpl_config
 
 # if plot all then call this many times
 # if there are many countries and plot_type == bar, then call this multiple times
@@ -11,12 +11,24 @@ from data_processing.constants import COLORS
 def plot_country_data(fig, ax1, countries, plot = 'new_cases', plot_type = 'line'):
     if not (isinstance(countries, list) or isinstance(countries, tuple)):
         raise TypeError("Please pass in a list/tuple of Country/Countries")
-    
-    # country comes in as a list
-    
-    plt.style.use('seaborn-colorblind')
-    
+
     axes = [ax1]
+
+    axes[0].set_facecolor(mpl_config[plot]['bg'] + [0.3])
+    fig.patch.set_facecolor(mpl_config[plot]['bg'] + [0.3])
+
+    axes[0].spines["right"].set_visible(False)
+    axes[0].spines["top"].set_visible(False)
+
+    axes[0].xaxis.label.set_color(mpl_config[plot]['text'])
+    axes[0].tick_params(axis='x', colors=mpl_config[plot]['text'])
+    axes[0].yaxis.label.set_color(mpl_config[plot]['text'])
+    axes[0].tick_params(axis='y', colors=mpl_config[plot]['text'])
+    axes[0].title.set_color(mpl_config[plot]['text'])
+
+    # setting the spine color
+    for spine in axes[0].spines.values():
+        spine.set_edgecolor(mpl_config[plot]['plot'])
 
     country_dictionary = get_country_dictionary(countries, plot)
     
@@ -77,7 +89,7 @@ def plot_country_data(fig, ax1, countries, plot = 'new_cases', plot_type = 'line
                 country_data_x[index], 
                 country_data_y[index], 
                 label = country_name[index].upper(),
-                color = COLORS[colori],
+                color = mpl_config[plot]['plot'],
                 alpha = 0.75
             )
         
@@ -86,7 +98,7 @@ def plot_country_data(fig, ax1, countries, plot = 'new_cases', plot_type = 'line
                 country_data_x[index], 
                 country_data_y[index], 
                 label = country_name[index].upper(),
-                color = COLORS[colori],
+                color = mpl_config[plot]['plot'],
                 width = 1.0,
                 edgecolor = 'white',
                 align = 'center'
@@ -129,7 +141,7 @@ def plot_all_data_for_a_country(fig, all_axes, country, plot_type = 'line'):
     dates = [new_cases.index, total_cases.index, new_deaths.index, total_deaths.index]
     to_plot = [new_cases, total_cases, new_deaths, total_deaths]
     labels = ['New Cases / Day', 'Total Cases', 'New Deaths / Day', 'Total Deaths']
-
+    plot = ['new_cases', 'total_cases', 'new_deaths', 'total_deaths']
     
     ((ax1, ax2), (ax3, ax4)) = all_axes
         
@@ -143,12 +155,30 @@ def plot_all_data_for_a_country(fig, all_axes, country, plot_type = 'line'):
         axis.set_xlabel("Month of 2020")
         y = labels[index].split('/')[0]
         axis.set_ylabel(y)
+
+        # --------color config----------------------------
+        axis.set_facecolor(mpl_config[plot[index]]['bg'] + [0.3])
+        fig.patch.set_facecolor([0,0,0,0])
+
+        axis.spines["right"].set_visible(False)
+        axis.spines["top"].set_visible(False)
+
+        axis.xaxis.label.set_color(mpl_config[plot[index]]['text'])
+        axis.tick_params(axis='x', colors=mpl_config[plot[index]]['text'])
+        axis.yaxis.label.set_color(mpl_config[plot[index]]['text'])
+        axis.tick_params(axis='y', colors=mpl_config[plot[index]]['text'])
+        axis.title.set_color(mpl_config[plot[index]]['text'])
+
+        # setting the spine color
+        for spine in axis.spines.values():
+            spine.set_edgecolor(mpl_config[plot[index]]['plot'])
+        #---------color config----------------------------
         
         if plot_type == 'line':
-            axis.plot(dates[index], to_plot[index], color = COLORS[colori])
+            axis.plot(dates[index], to_plot[index], color = mpl_config[plot[index]]['plot'])
             
         if plot_type == 'bar':
-            axis.bar(dates[index], to_plot[index], color = COLORS[colori], width = 0.75)
+            axis.bar(dates[index], to_plot[index], color = mpl_config[plot[index]]['plot'], width = 0.75)
             
         colori = 0 if (colori + 1 == len(COLORS)) else (colori + 1)
     

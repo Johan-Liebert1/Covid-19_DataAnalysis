@@ -1,8 +1,9 @@
 from flask import Flask, send_file
 import os
-import matplotlib
-from matplotlib.pyplot import axes, axis, plot
-matplotlib.use('Agg') # non GUI backend
+
+import matplotlib as mpl
+mpl.use('Agg') # non GUI backend
+
 import matplotlib.pyplot as plt
 
 
@@ -14,7 +15,9 @@ def delete_all_files_in_temp():
 
 @app.route("/plotdata/<string:country>/<string:data>/<string:plot_type>")
 def country_plot(country, data, plot_type):
+
     delete_all_files_in_temp()
+
     if data != 'all':
         fig, (ax1) = plt.subplots(1,1, figsize=(10, 5))
 
@@ -59,4 +62,5 @@ def global_plot(data, plot_type):
 if __name__ == "__main__":
     from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country
     from data_processing.globalDataPlot import plot_global_data
+    from data_processing.constants import mpl_config
     app.run(debug = True, threaded = True)
