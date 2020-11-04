@@ -115,6 +115,22 @@ def comapre_continents_plot(data, plot_type):
 
     return send_file(filename, mimetype='image/gif'), 200
 
+@app.route("/plotdata/continent/<string:continent>/<string:data>/<string:plot_type>")
+def continent_plot(continent, data, plot_type):
+    delete_all_files_in_temp()
+
+    if data == 'all':
+        fig, axes = plt.subplots(2,2, figsize=(20, 10))
+
+        filename = plot_all_data_for_a_continent(
+            fig = fig, 
+            all_axes = axes,
+            continent = continent,
+            plot_type = plot_type
+        )
+
+    return send_file(filename, mimetype='image/gif')
+
 
 
 # compare countries
@@ -167,5 +183,5 @@ def compare_countries_plot(data, plot_type):
 if __name__ == "__main__":
     from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country, compare_country_data
     from data_processing.globalDataPlot import plot_global_data
-    from data_processing.continentDataPlot import compare_continent_data
+    from data_processing.continentDataPlot import compare_continent_data, plot_all_data_for_a_continent
     app.run(debug = True, threaded = True)

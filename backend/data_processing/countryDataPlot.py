@@ -147,8 +147,6 @@ def plot_all_data_for_a_country(fig, all_axes, country, plot_type = 'line'):
         
     axes = [ax1, ax2, ax3, ax4]
 
-    colori = 0
-
     for index, axis in enumerate(axes):
         axis.set_title(labels[index])
         axis.tick_params(axis='x', rotation=35)
@@ -175,13 +173,21 @@ def plot_all_data_for_a_country(fig, all_axes, country, plot_type = 'line'):
         #---------color config----------------------------
         
         if plot_type == 'line':
-            axis.plot(dates[index], to_plot[index], color = mpl_config[plot[index]]['plot'])
+            axis.plot(
+                dates[index], 
+                to_plot[index],
+                color = mpl_config[plot[index]]['plot']
+            )
+
             
         if plot_type == 'bar':
-            axis.bar(dates[index], to_plot[index], color = mpl_config[plot[index]]['plot'], width = 0.75)
-            
-        colori = 0 if (colori + 1 == len(COLORS)) else (colori + 1)
-    
+            axis.bar(
+                dates[index], 
+                to_plot[index], 
+                color = mpl_config[plot[index]]['plot'], 
+                width = 0.75
+            )
+                
     fig.tight_layout(pad = 3.0)
 
     backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
