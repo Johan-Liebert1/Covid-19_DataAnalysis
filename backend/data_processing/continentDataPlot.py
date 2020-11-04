@@ -4,7 +4,7 @@ from data_processing.helpers import get_continent_data
 from data_processing.constants import mpl_config, COLORS
 
 
-def plot_continent_data(
+def compare_continent_data(
     fig,
     all_axes,
     continents = ['asia'], 

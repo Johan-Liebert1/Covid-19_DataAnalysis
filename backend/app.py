@@ -1,5 +1,5 @@
 from flask import Flask, send_file, request
-import os, json
+import os
 
 import matplotlib as mpl
 mpl.use('Agg') # non GUI backend
@@ -70,12 +70,13 @@ def global_plot(data, plot_type):
     return send_file(filename, mimetype='image/gif'), 200
 
 
-@app.route('/plotdata/continent/<string:data>/<string:plot_type>')
-def continent_plot(data, plot_type):
+# compare continents
+@app.route('/plotdata/continents/<string:data>/<string:plot_type>')
+def comapre_continents_plot(data, plot_type):
     delete_all_files_in_temp()
 
     continents = request.args.get('conts')
-    cont_list = continents.split(',')
+    cont_list = [i.lower() for i in continents.split(',')]
 
     # going to be at least 2 
     isEven = len(cont_list) % 2 == 0
@@ -94,7 +95,7 @@ def continent_plot(data, plot_type):
             fig.delaxes(all_axes[-1])
     
 
-        filename = plot_continent_data(
+        filename = compare_continent_data(
             fig = fig, 
             all_axes = all_axes,
             continents = cont_list,
@@ -103,7 +104,7 @@ def continent_plot(data, plot_type):
         )
     
     else:
-        filename = plot_continent_data(
+        filename = compare_continent_data(
             fig = fig, 
             all_axes = axes,
             continents = cont_list,
@@ -116,8 +117,55 @@ def continent_plot(data, plot_type):
 
 
 
+# compare countries
+@app.route('/plotdata/countries/<string:data>/<string:plot_type>')
+def compare_countries_plot(data, plot_type):
+    delete_all_files_in_temp()
+
+    countries = request.args.get('countries')
+    cont_list = [i.lower() for i in countries.split(',')]
+
+    # going to be at least 2 
+    isEven = len(cont_list) % 2 == 0
+    rows = len(cont_list) // 2 if isEven else ( len(cont_list) + 1 ) // 2
+    fig_height = 5 * rows
+    fig, axes = plt.subplots( rows , 2 , figsize=(20, fig_height))
+    
+    if len(cont_list) > 2:
+        all_axes = []
+        
+        for r in range(rows):
+            for c in range(2):
+                all_axes.append( axes[r][c] )
+        
+        if not isEven:
+            fig.delaxes(all_axes[-1])
+    
+
+        filename = compare_country_data(
+            fig = fig, 
+            all_axes = all_axes,
+            countries = cont_list,
+            plot = data,
+            plot_type = plot_type
+        )
+    
+    else:
+        filename = compare_country_data(
+            fig = fig, 
+            all_axes = axes,
+            countries = cont_list,
+            plot = data,
+            plot_type = plot_type
+        )
+
+
+    return send_file(filename, mimetype='image/gif'), 200
+
+
+
 if __name__ == "__main__":
-    from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country
+    from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country, compare_country_data
     from data_processing.globalDataPlot import plot_global_data
-    from data_processing.continentDataPlot import plot_continent_data
+    from data_processing.continentDataPlot import compare_continent_data
     app.run(debug = True, threaded = True)

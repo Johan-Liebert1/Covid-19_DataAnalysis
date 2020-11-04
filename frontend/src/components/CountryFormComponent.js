@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
+import '../styles/CountryFormStyles.css'
+
 const CountryFormComponent = ({ isCountry }) => {
-    
+    const initial = isCountry ? countries[0] : continents[0]
+
     const [c, setC] = useState('')
     const [pws, setPws] = useState('')
     const [pts, setPts] = useState('')
+    const [cArray, setCArray] = useState([])
 
-    const [country, setCountry] = useState(countries[0])
+    const [country, setCountry] = useState(initial)
     const [plotWhatState, setPlotWhatState] = useState(plotWhat[0])
     const [plotTypeState, setPlotTypeState] = useState(plotType[0])
     const [showImage, setShowImage] = useState(false)
@@ -17,14 +21,40 @@ const CountryFormComponent = ({ isCountry }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        setShowImage(true)
-        setC(country.toLowerCase())
-        setPws(plotWhatState)
-        setPts(plotTypeState)  
+
+        // make some checks here
+        if ( cArray.length > 1 && mapping[plotWhatState] === 'all' ) {
+            console.log('Error')
+        }
+
+        else {
+            setShowImage(true)
+            setC(country.toLowerCase())
+            setPws(plotWhatState)
+            setPts(plotTypeState)  
+        }
+    }
+
+    const pushToArrayC = (e) => {
+        setCountry(e.target.value)
+        setCArray([...cArray, e.target.value])
+    }
+
+    const popFromArrayC = (e) => {
+        setCArray(cArray.filter(c => c !== e.target.innerText))
     }
 
     const imageStyle = {
-        width: windowWidth * 0.95, height: windowHeight *0.95 
+        width: windowWidth * 0.95
+    }
+
+    const join = () => {
+        let s = ''
+        for (let i = 1; i < cArray.length - 1; i++) {
+            s += cArray[i] + ','
+        }
+
+        return cArray[0] + ',' + s + cArray[cArray.length - 1]
     }
 
     return (
@@ -38,7 +68,7 @@ const CountryFormComponent = ({ isCountry }) => {
                         <label htmlFor='country'>Select Country</label>
                         <select 
                             className = 'form-control'
-                            onChange = {(e) => setCountry(e.target.value)}
+                            onChange = {pushToArrayC}
                             style = {{
                                 backgroundColor: "transparent",
                                 color: 'white'
@@ -58,7 +88,7 @@ const CountryFormComponent = ({ isCountry }) => {
                         <label htmlFor='country'>Select Continent</label>
                         <select 
                             className = 'form-control'
-                            onChange = {(e) => setCountry(e.target.value)}
+                            onChange = {pushToArrayC}
                             style = {{
                                 backgroundColor: "transparent",
                                 color: 'white'
@@ -123,6 +153,30 @@ const CountryFormComponent = ({ isCountry }) => {
         
         </form>
         
+        <div className = 'container' style = {{
+            display: 'flex',
+            justifyContent: 'flex-start'
+        }}
+        >
+            {
+                cArray.length > 0 && cArray.map((c1, i) => (
+                    <p  
+                        id = 'selected-to-compare'
+                        key = {i} 
+                        style = {{
+                            color: 'rgb(51, 161, 254)',
+                            backgroundColor: 'rgba(51, 161, 254, 0.2)',
+                            borderRadius: '5px',
+                            padding: '0.5rem',
+                            marginRight: '0.5rem'
+                        }}
+                        onClick = {popFromArrayC}
+                    >
+                        {c1}
+                    </p>
+                ))
+            }
+        </div>
 
         <div style = {{ 
             display: 'flex', 
@@ -136,14 +190,41 @@ const CountryFormComponent = ({ isCountry }) => {
             <h1 style={{color: 'white', margin: '2rem auto'}}>Stats for {c.toUpperCase()}</h1>
         }
 
-        {
-            showImage && 
-            <img 
-                src = {`/plotdata/${c}/${mapping[pws]}/${mapping[pts]}`} 
-                alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
-                style= { mapping[pws] === 'all' ? imageStyle : {} }
-            />
+        {   showImage ?
+
+                isCountry ? 
+                    cArray.length > 1 ?
+                        <img
+                            src = {`/plotdata/countries/${mapping[pws]}/${mapping[pts]}?countries=${join()}`}
+                            style = {imageStyle} 
+                        />
+                        :
+                        <img 
+                            src = {`/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                            alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
+                            style= { mapping[pws] === 'all' ? imageStyle : {} }
+                        />
+
+                    :
+
+                // isCountry == false
+                cArray.length > 1 ? 
+
+                <img
+                    src = {`/plotdata/continents/${mapping[pws]}/${mapping[pts]}?conts=${join()}`}
+                    style = {imageStyle} 
+                />
+                
+                :
+
+                null
+
+            :
+
+            null
+
         }
+
         </div>
 
         </div>

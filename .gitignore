@@ -6,6 +6,7 @@ untitled.ipynb
 .vscode/
 endpoints.txt
 backend/temp/
+Notebooks/
 
 # dependencies
 frontend/node_modules/

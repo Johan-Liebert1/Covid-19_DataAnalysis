@@ -45,21 +45,21 @@ def get_deaths(country, how = 'New_deaths'):
 def get_country_dictionary(countries, plot):
     country_dictionary = {}
     
-    for i in countries:
+    for country in countries:
         if plot.lower() == "new_cases":
-            country_dictionary[i] = get_cases(i)
+            country_dictionary[country] = get_cases(country)
             
         
         elif plot.lower() == 'total_cases':
-            country_dictionary[i] = get_cases(i, 'Cumulative_cases')
+            country_dictionary[country] = get_cases(country, 'Cumulative_cases')
                 
             
         elif plot.lower() == 'new_deaths':
-            country_dictionary[i] = get_deaths(i)
+            country_dictionary[country] = get_deaths(country)
             
             
         elif plot.lower() == 'total_deaths':
-            country_dictionary[i] = get_deaths(i, 'Cumulative_deaths') 
+            country_dictionary[country] = get_deaths(country, 'Cumulative_deaths') 
                 
        
     country_dictionary = {
