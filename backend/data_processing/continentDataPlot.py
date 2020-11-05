@@ -73,87 +73,79 @@ def compare_continent_data(
                 )
         fig.tight_layout(pad = 2.0)
     
-    
-    # if plot_type == 'line' and one_plot:
-    #     axis = all_axes
-        
-    #     dates_x, ys = [], []
-        
-    #     for c in continents:
-        
-    #         dates, y = get_continent_data(c, plot = plot)
-    #         dates_x.append(dates)
-    #         ys.append(y)
-        
-        
-    #     to_add = ' / Day' if 'new' in plot else ''
-    #     axis.set_title(f"{plot.split()[0].upper()} COVID-19 {plot.split()[1].upper()}{to_add}")
-    #     axis.set_xlabel('Month of 2020')
-    #     axis.set_ylabel(plot.upper())
-        
-        
-    #     for i in range(len(dates_x)):
-    #         axis.plot(
-    #             dates_x[i], 
-    #             ys[i], 
-    #             color = mpl_config, 
-    #             label = continents[i]
-    #         )
-            
-    #     axis.legend()
-        
-    #     fig.tight_layout(pad = 3.0)
-   
-            
-    # else:
-    #     dates_x, ys = [], []
-        
-    #     for c in continents:
-    #         a, b = get_continent_data(c, plot)
-    #         dates_x.append(a)
-    #         ys.append(b)
-
-        
-    #     if len(continents) > 2:
-    #         num = len(continents) // 2 if len(continents) % 2 == 0 else len(continents) // 2 + 1
-            
-    #     else:
-    #         num = 2
-        
-    #     fig, all_axis_objs = plt.subplots(num, 2, figsize=(10, 2.5 * num))
-        
-    #     axes = []
-        
-    #     s0 = all_axis_objs.shape[0]
-        
-    #     s1 = all_axis_objs.shape[1]
-   
-    #     for i in range(s0):
-    #         for j in range(s1):
-    #             axes.append(all_axis_objs[i][j])
-
-    #     axes = axes if len(continents) % 2 == 0 else axes[:-1]
-        
-    #     for index, axis in enumerate(axes):
-    #         if index < len(dates_x):
-    #             to_add = ' / Day' if 'new' in plot else ''
-    #             axis.set_xlabel('Month of 2020')
-    #             axis.set_ylabel(plot.upper())
-    #             axis.set_title(f"{plot.split()[0].upper()} COVID-19 {plot.split()[1].upper()}{to_add} in {continents[index]}")
-    #             axis.tick_params(axis = 'x', rotation = 35)
-                
-    #             if plot_type == 'line':
-    #                 axis.plot(dates_x[index], ys[index], color = COLORS[index])
-                    
-    #             else:
-    #                 axis.bar(dates_x[index], ys[index], color = COLORS[index], width = 0.5)
-    
     backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     os.makedirs(os.path.join(backend_dir, 'temp'), exist_ok=True)
     filepath = os.path.join(backend_dir, 'temp', f"{continents}.png")
     fig.savefig(filepath)
 
     return filepath
+
+
+def plot_continent_data(
+    fig,
+    axis,
+    continent,
+    plot = 'new_cases',
+    plot_type = 'line'
+    ):
+
+    date, data = get_continent_data(continent, plot)
+
+    to_add = '/Day' if 'new' in plot else ''
+    title = f"{plot.split('_')[0].upper()} COVID-19 {plot.split('_')[1].upper()}{to_add} in {continent.upper()}"
+    axis.set_title(
+        title
+    )
+
+    print(title)
+
+    axis.set_ylabel(plot.upper())
+    axis.set_xlabel('Month of 2020')
+    axis.tick_params(axis='x', rotation=35)
+
+    # --------color config----------------------------
+    fig.patch.set_facecolor(mpl_config[plot]['bg'] + [0.3])
+    axis.set_facecolor(mpl_config[plot]['bg'] + [0.3])
+
+    axis.spines["right"].set_visible(False)
+    axis.spines["top"].set_visible(False)
+
+    axis.xaxis.label.set_color(mpl_config[plot]['text'])
+    axis.tick_params(axis='x', colors=mpl_config[plot]['text'])
+    axis.yaxis.label.set_color(mpl_config[plot]['text'])
+    axis.tick_params(axis='y', colors=mpl_config[plot]['text'])
+    axis.title.set_color(mpl_config[plot]['text'])
+
+    # setting the spine color
+    for spine in axis.spines.values():
+        spine.set_edgecolor(mpl_config[plot]['plot'])
+
+    #---------color config----------------------------
+
+
+    if plot_type == 'line':
+        axis.plot(
+            date,
+            data,
+            color = mpl_config[plot]['plot']
+        )
+
+    else:
+        axis.bar(
+            date,
+            data,
+            color = mpl_config[plot]['plot']
+        )
+
+    fig.tight_layout(pad = 3.0)
+
+    backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    os.makedirs(os.path.join(backend_dir, 'temp'), exist_ok=True)
+    filepath = os.path.join(backend_dir, 'temp', f"{continent}-{plot}.png")
+    fig.savefig(filepath)
+
+    return filepath
+
 
 
 def plot_all_data_for_a_continent(fig, all_axes, continent, plot_type = 'line'):

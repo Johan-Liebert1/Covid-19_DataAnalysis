@@ -129,6 +129,16 @@ def continent_plot(continent, data, plot_type):
             plot_type = plot_type
         )
 
+    else:
+        fig, axes = plt.subplots(1,1, figsize = (10, 5))
+        filename = plot_continent_data(
+            fig,
+            axes,
+            continent = continent,
+            plot = data,
+            plot_type = plot_type
+        )
+
     return send_file(filename, mimetype='image/gif')
 
 
@@ -183,5 +193,5 @@ def compare_countries_plot(data, plot_type):
 if __name__ == "__main__":
     from data_processing.countryDataPlot import plot_country_data, plot_all_data_for_a_country, compare_country_data
     from data_processing.globalDataPlot import plot_global_data
-    from data_processing.continentDataPlot import compare_continent_data, plot_all_data_for_a_continent
+    from data_processing.continentDataPlot import compare_continent_data, plot_all_data_for_a_continent, plot_continent_data
     app.run(debug = True, threaded = True)

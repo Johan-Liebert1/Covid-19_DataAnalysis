@@ -38,7 +38,7 @@ const CountryFormComponent = ({ isCountry }) => {
     const pushToArrayC = (e) => {
         setCountry(e.target.value)
         
-        if (mapping[plotWhatState] != 'all')
+        if (mapping[plotWhatState] !== 'all')
             setCArray([...cArray, e.target.value])
     }
 
@@ -198,6 +198,7 @@ const CountryFormComponent = ({ isCountry }) => {
                     cArray.length > 1 ?
                         <img
                             src = {`/plotdata/countries/${mapping[pws]}/${mapping[pts]}?countries=${join()}`}
+                            alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                             style = {imageStyle} 
                         />
                         :
@@ -214,6 +215,7 @@ const CountryFormComponent = ({ isCountry }) => {
 
                 <img
                     src = {`/plotdata/continents/${mapping[pws]}/${mapping[pts]}?conts=${join()}`}
+                    alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                     style = {imageStyle} 
                 />
                 

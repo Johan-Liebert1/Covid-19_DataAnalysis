@@ -26,5 +26,5 @@ export const mapping = {
 }
 
 export const continents = [
-    "Asia", 'Africa', "North America", "South America", "Europe", "Australia"
+    "Asia", 'Africa', "North America", "South America", "Europe", "Oceania"
 ]
