@@ -28,3 +28,33 @@ export const mapping = {
 export const continents = [
     "Asia", 'Africa', "North America", "South America", "Europe", "Oceania"
 ]
+
+export const color_config = {
+    'new_deaths' : {
+        'bg' : [51 , 20  , 39],
+        'plot' : [253, 7, 58],
+        'text' : [253, 7, 58],
+        'heading': "New Deaths Reported/Day"
+    },
+
+    'new_cases': {
+        'bg' : [21,29,51],
+        'plot' : [0, 123, 253],
+        'text' : [0, 123, 253],
+        'heading': "New Cases Reported/Day"
+    },
+
+    'total_cases' : {
+        'bg' : [24, 40, 41],
+        'plot': [40, 166, 69],
+        'text': [40, 166, 69],
+        'heading': "Total Cases Reported"
+    },
+
+    'total_deaths' : {
+        'bg' : [28, 28, 43],
+        'plot': [200, 200, 200],
+        'text': [200, 200, 200],
+        'heading': "Total Deaths Reported"
+    }
+}

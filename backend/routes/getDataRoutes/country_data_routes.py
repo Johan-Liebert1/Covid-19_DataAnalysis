@@ -28,8 +28,8 @@ def country_data(country):
 
         dict_to_return[key[index]] = {
             f'first_{key[index]}_date': stat.index[0] ,
-            'total' : total,
-            'maximum': max_stat,
+            'total' : total[0],
+            'maximum': max_stat[0],
             f'max_{key[index]}_date': max_stat_date
         }
 

@@ -88,7 +88,7 @@ const GlobalFormComponent = () => {
         {
             showImage && 
             <img 
-                src = {`/plotdata/global/${mapping[pws]}/${mapping[pts]}`} 
+                src = {`api/plotdata/global/${mapping[pws]}/${mapping[pts]}`} 
                 alt = {`global-${mapping[pws]}-${mapping[pts]}`}
                 style= { mapping[pws] === 'all' ? imageStyle : {} }
             />

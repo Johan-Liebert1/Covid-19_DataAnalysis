@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCountryData } from '../actions/mainActions';
 import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
 import '../styles/CountryFormStyles.css'
+import ShowDataComponent from './ShowDataComponent';
 
 const CountryFormComponent = ({ isCountry }) => {
     const initial = isCountry ? countries[0] : continents[0]
@@ -17,9 +20,11 @@ const CountryFormComponent = ({ isCountry }) => {
     const [showImage, setShowImage] = useState(false)
 
     const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
 
-    const submitHandler = (e) => {
+    const dispatch = useDispatch()
+    const { data } = useSelector(state => state.data)
+
+    const submitHandler = async (e) => {
         e.preventDefault()
 
         // make some checks here
@@ -31,7 +36,8 @@ const CountryFormComponent = ({ isCountry }) => {
             setShowImage(true)
             setC(country.toLowerCase())
             setPws(plotWhatState)
-            setPts(plotTypeState)  
+            setPts(plotTypeState) 
+            dispatch(getCountryData(country.toLowerCase()))
         }
     }
 
@@ -197,13 +203,15 @@ const CountryFormComponent = ({ isCountry }) => {
                 isCountry ? 
                     cArray.length > 1 ?
                         <img
-                            src = {`/plotdata/countries/${mapping[pws]}/${mapping[pts]}?countries=${join()}`}
+                            src = {
+                                `api/plotdata/countries/${mapping[pws]}/${mapping[pts]}?countries=${join()}`
+                            }
                             alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                             style = {imageStyle} 
                         />
                         :
                         <img 
-                            src = {`/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                            src = {`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`} 
                             alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                             style= { mapping[pws] === 'all' ? imageStyle : {} }
                         />
@@ -214,7 +222,7 @@ const CountryFormComponent = ({ isCountry }) => {
                 cArray.length > 1 ? 
 
                 <img
-                    src = {`/plotdata/continents/${mapping[pws]}/${mapping[pts]}?conts=${join()}`}
+                    src = {`api/plotdata/continents/${mapping[pws]}/${mapping[pts]}?conts=${join()}`}
                     alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                     style = {imageStyle} 
                 />
@@ -222,7 +230,7 @@ const CountryFormComponent = ({ isCountry }) => {
                 :
 
                 <img 
-                    src = {`/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`} 
+                    src = {`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`} 
                     alt = {`${c}-${mapping[pws]}-${mapping[pts]}`}
                     style= { mapping[pws] === 'all' ? imageStyle : {} }
                 />
@@ -232,6 +240,17 @@ const CountryFormComponent = ({ isCountry }) => {
             null
 
         }
+
+        </div>
+
+        <div 
+            className='container row'
+            // style = {{
+            //     display: "flex",
+            //     flexWrap: 'wrap',
+            //     justifyContent: 'space-between'
+            // }}
+        >
 
         </div>
 
