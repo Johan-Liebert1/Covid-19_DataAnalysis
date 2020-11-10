@@ -10,6 +10,10 @@ const ShowDataComponent = ({ dataType, data, c }) => {
         display: 'flex',
         flexDirection: 'column',
         height: '400px',
+        borderRadius: '10px',
+        marginRight: '2rem',
+        boxShadow: `0 0 1rem ${color_config[dataType]['text']}`
+
     }
 
     if (dataType === 'new_cases') {
@@ -86,7 +90,7 @@ const ShowDataComponent = ({ dataType, data, c }) => {
     }
 
     return (
-        <div style = {divStyles} className = 'col-10 col-md-9 col-lg-6 p-5'>
+        <div style = {divStyles} className = 'col-10 col-md-9 col-lg-5 p-5'>
             {   c === 'global' ? 
                 <h3 className = 'mb-3'>Global {color_config[dataType].heading}</h3>
                 :
