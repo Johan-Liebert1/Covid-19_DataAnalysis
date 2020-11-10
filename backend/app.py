@@ -18,6 +18,7 @@ app.register_blueprint(home_page, url_prefix = '/api')
 # for deployment
 @app.route('/')
 def serve_index():
+    os.makedirs('temp', exist_ok=True)
     return send_from_directory(app.static_folder, 'index.html')
 
 # plotting routes
