@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getContinentData, getCountryData } from '../actions/mainActions';
+import { clearDataFromState, getContinentData, getCountryData } from '../actions/mainActions';
 import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
 import '../styles/CountryFormStyles.css'
@@ -68,6 +68,10 @@ const CountryFormComponent = ({ isCountry }) => {
 
         return cArray[0] + ',' + s + cArray[cArray.length - 1]
     }
+
+    useEffect(() => {
+        dispatch(clearDataFromState())
+    }, [])
 
     return (
         <div style = {{ width: '100%' }}>

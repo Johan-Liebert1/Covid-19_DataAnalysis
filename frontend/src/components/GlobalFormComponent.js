@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getGlobalData } from '../actions/mainActions';
+import { clearDataFromState, getGlobalData } from '../actions/mainActions';
 import { plotType, plotWhat, mapping } from "../constants";
 import ShowDataComponent from './ShowDataComponent';
 
@@ -30,6 +30,10 @@ const GlobalFormComponent = () => {
     const imageStyle = {
         width: windowWidth * 0.95, height: windowHeight * 0.95 
     }
+
+    useEffect(() => {
+        dispatch(clearDataFromState())
+    }, [])
 
     return (
         <div style = {{ width: '100%' }}>

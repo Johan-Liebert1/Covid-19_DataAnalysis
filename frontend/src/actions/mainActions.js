@@ -27,3 +27,10 @@ export const getGlobalData = () => async (dispatch) => {
         payload: data
     })
 }
+
+
+export const clearDataFromState = () => async (dispatch) => {
+    dispatch({
+        type: 'CLEAR_DATA_FROM_STATE'
+    })
+}

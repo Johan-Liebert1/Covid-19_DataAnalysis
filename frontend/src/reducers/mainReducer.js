@@ -9,6 +9,9 @@ export const mainReducer = (state = { data : {} }, action) => {
         case 'GLOBAL_DATA_REQUEST':
             return { data : action.payload }
 
+        case 'CLEAR_DATA_FROM_STATE':
+            return { data: {} }
+
         default:
             return state
     }
