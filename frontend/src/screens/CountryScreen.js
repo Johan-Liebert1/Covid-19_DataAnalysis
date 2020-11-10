@@ -7,7 +7,7 @@ const CountryScreen = () => {
     const mainStyle = { width: '100%' }
 
     return (
-        <div style = {mainStyle} >
+        <div style = {mainStyle}  className = 'mb-5'>
             <NavbarComponent />
 
             <CountryFormComponent isCountry />

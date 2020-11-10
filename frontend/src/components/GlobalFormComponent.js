@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getGlobalData } from '../actions/mainActions';
 import { plotType, plotWhat, mapping } from "../constants";
+import ShowDataComponent from './ShowDataComponent';
 
 const GlobalFormComponent = () => {
+    const dispatch = useDispatch()
+    const data = useSelector(state => state.data)
+
     const [pws, setPws] = useState('')
     const [pts, setPts] = useState('')
 
@@ -14,6 +20,8 @@ const GlobalFormComponent = () => {
         setShowImage(true)
         setPws(plotWhatState)
         setPts(plotTypeState)  
+
+        dispatch(getGlobalData())
     }
 
     const windowWidth = window.innerWidth
@@ -93,6 +101,25 @@ const GlobalFormComponent = () => {
                 style= { mapping[pws] === 'all' ? imageStyle : {} }
             />
         }
+        </div>
+
+        <div 
+            className='container'
+        >
+            <div 
+                className = 'row'
+                style = {{
+                display: "flex",
+                justifyContent: 'center'
+            }}
+            >
+                {   Object.keys(data).length > 0 && 
+                    ['new_cases', 'new_deaths'].map(
+                        (k, index) =>
+                        <ShowDataComponent key={index} dataType = {k} data = {data[k]} c = 'global' /> 
+                    )
+                }
+            </div>
         </div>
 
         </div>

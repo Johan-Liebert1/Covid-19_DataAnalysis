@@ -7,7 +7,7 @@ import '../styles/GlobalScreenStyles.css'
 
 const GlobalScreen = () => {
     return (
-        <div>
+        <div  className = 'mb-5'>
             <NavbarComponent />
 
             <GlobalFormComponent />

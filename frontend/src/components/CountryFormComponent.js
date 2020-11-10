@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCountryData } from '../actions/mainActions';
+import { getContinentData, getCountryData } from '../actions/mainActions';
 import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
 import '../styles/CountryFormStyles.css'
@@ -22,7 +22,7 @@ const CountryFormComponent = ({ isCountry }) => {
     const windowWidth = window.innerWidth
 
     const dispatch = useDispatch()
-    const { data } = useSelector(state => state.data)
+    const data = useSelector(state => state.data)
 
     const submitHandler = async (e) => {
         e.preventDefault()
@@ -37,7 +37,11 @@ const CountryFormComponent = ({ isCountry }) => {
             setC(country.toLowerCase())
             setPws(plotWhatState)
             setPts(plotTypeState) 
+
+            isCountry ?
             dispatch(getCountryData(country.toLowerCase()))
+            :
+            dispatch(getContinentData(country.toLowerCase()))
         }
     }
 
@@ -244,14 +248,22 @@ const CountryFormComponent = ({ isCountry }) => {
         </div>
 
         <div 
-            className='container row'
-            // style = {{
-            //     display: "flex",
-            //     flexWrap: 'wrap',
-            //     justifyContent: 'space-between'
-            // }}
+            className='container'
         >
-
+            <div 
+                className = 'row'
+                style = {{
+                display: "flex",
+                justifyContent: 'center'
+            }}
+            >
+                {   Object.keys(data).length > 0 && 
+                    ['new_cases', 'new_deaths'].map(
+                        (k, index) =>
+                        <ShowDataComponent key={index} dataType = {k} data = {data[k]} c = {country} /> 
+                    )
+                }
+            </div>
         </div>
 
         </div>

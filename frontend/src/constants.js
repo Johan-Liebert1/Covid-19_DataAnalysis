@@ -31,30 +31,26 @@ export const continents = [
 
 export const color_config = {
     'new_deaths' : {
-        'bg' : [51 , 20  , 39],
-        'plot' : [253, 7, 58],
-        'text' : [253, 7, 58],
-        'heading': "New Deaths Reported/Day"
+        'bg' : 'rgb(51, 20, 39)',
+        'text' : 'rgb(253, 7, 58)',
+        'heading': "Death Statistics"
     },
 
     'new_cases': {
-        'bg' : [21,29,51],
-        'plot' : [0, 123, 253],
-        'text' : [0, 123, 253],
-        'heading': "New Cases Reported/Day"
+        'bg' : 'rgb(21,29,51)',
+        'text' : 'rgb(0, 123, 253)',
+        'heading': "Case Statistics"
     },
 
     'total_cases' : {
-        'bg' : [24, 40, 41],
-        'plot': [40, 166, 69],
-        'text': [40, 166, 69],
+        'bg' : 'rgb(24, 40, 41)',
+        'text': 'rgb(40, 166, 69)',
         'heading': "Total Cases Reported"
     },
 
     'total_deaths' : {
-        'bg' : [28, 28, 43],
-        'plot': [200, 200, 200],
-        'text': [200, 200, 200],
+        'bg' : 'rgb(28, 28, 43)',
+        'text': 'rgb(200, 200, 200)',
         'heading': "Total Deaths Reported"
     }
 }

@@ -4,7 +4,7 @@ import NavbarComponent from '../components/NavbarComponent'
 
 const ContinentScreen = () => {
     return (
-        <div>
+        <div className = 'mb-5'>
             <NavbarComponent />
             <CountryFormComponent isCountry = {false} />
         </div>
