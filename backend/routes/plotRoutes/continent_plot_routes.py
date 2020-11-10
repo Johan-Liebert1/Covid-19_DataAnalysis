@@ -21,7 +21,8 @@ def delete_all_files_in_temp():
     temp_path = join_path(backend_dir, 'temp')
 
     for file in os.listdir(temp_path):
-        os.remove(join_path(temp_path, file))
+        if file.endswith('.png'):
+            os.remove(join_path(temp_path, file))
 
 
 
