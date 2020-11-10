@@ -74,7 +74,7 @@ def compare_continent_data(
         fig.tight_layout(pad = 2.0)
     
     backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    os.makedirs(os.path.join(backend_dir, 'temp'), exist_ok=True)
+    os.makedirs(os.path.join(backend_dir, 'temp'), exist_ok = True)
     filepath = os.path.join(backend_dir, 'temp', f"{continents}.png")
     fig.savefig(filepath)
 

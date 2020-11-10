@@ -1,10 +1,12 @@
 import pandas as pd
 import numpy as np
+import os
 from data_processing.continents_and_countries import mapping
 from data_processing.constants import column_name
 
 def get_df():
-    df = pd.read_csv('data/WHO-COVID-19-global-data.csv')
+    data_path = os.path.dirname(os.path.dirname( os.path.abspath(__file__) ))
+    df = pd.read_csv(os.path.join(data_path, 'data', 'WHO-COVID-19-global-data.csv'))
 
     df.columns = [i.strip() for i in df.columns]
     df.rename(columns={'Date_reported' : 'Date'}, inplace = True)

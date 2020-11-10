@@ -1,11 +1,10 @@
 .ipynb_checkpoints/
-*.csv
 __pycache__/
+*.png
 backend/__pycache__
 untitled.ipynb
 .vscode/
 endpoints.txt
-backend/temp/
 Notebooks/
 backend/flask/
 
