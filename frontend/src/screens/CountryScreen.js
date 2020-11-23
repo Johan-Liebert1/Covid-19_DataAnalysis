@@ -4,12 +4,11 @@ import { routeAnimation } from "../animations";
 import CountryFormComponent from "../components/CountryFormComponent";
 
 const CountryScreen = () => {
-	const mainStyle = { width: "100%", overflow: "hidden" };
+	const mainStyle = { width: "100%", overflow: "hidden", minHeight: "67vh" };
 
 	return (
 		<motion.div
 			style={mainStyle}
-			className="mb-5"
 			variants={routeAnimation}
 			initial="hidden"
 			animate="showing"

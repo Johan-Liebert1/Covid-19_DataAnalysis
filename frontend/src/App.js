@@ -7,6 +7,7 @@ import ContinentScreen from "./screens/ContinentScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { AnimatePresence } from "framer-motion";
 import NavbarComponent from "./components/NavbarComponent";
+import Footer from "./components/Footer";
 
 function App() {
 	const location = useLocation();
@@ -24,6 +25,7 @@ function App() {
 					<Route exact path="/continent" render={() => <ContinentScreen />} />
 				</Switch>
 			</AnimatePresence>
+			<Footer />
 		</>
 	);
 }

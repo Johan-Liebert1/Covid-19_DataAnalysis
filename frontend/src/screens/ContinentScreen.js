@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { routeAnimation } from "../animations";
 
 const ContinentScreen = () => {
+	const mainStyle = { width: "100%", overflow: "hidden", minHeight: "67vh" };
 	return (
 		<motion.div
-			className="mb-5"
+			style={mainStyle}
 			variants={routeAnimation}
 			initial="hidden"
 			animate="showing"

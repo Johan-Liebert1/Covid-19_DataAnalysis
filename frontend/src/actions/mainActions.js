@@ -1,36 +1,34 @@
-import axios from 'axios'
+import axios from "axios";
 
-export const getCountryData = (country) => async (dispatch) => {
-    const { data } = await axios.get(`/api/getdata/country/${country}`)
+export const getCountryData = country => async dispatch => {
+	const { data } = await axios.get(`/api/getdata/country/${country}`);
 
-    dispatch({
-        type: 'COUNTRY_DATA_REQUEST',
-        payload: data
-    })
-}
+	dispatch({
+		type: "COUNTRY_DATA_REQUEST",
+		payload: data,
+	});
+};
 
-export const getContinentData = (continent) => async (dispatch) => {
-    const { data } = await axios.get(`/api/getdata/continent/${continent}`)
+export const getContinentData = continent => async dispatch => {
+	const { data } = await axios.get(`/api/getdata/continent/${continent}`);
 
-    dispatch({
-        type: 'CONTINENT_DATA_REQUEST',
-        payload: data
-    })
-}
+	dispatch({
+		type: "CONTINENT_DATA_REQUEST",
+		payload: data,
+	});
+};
 
+export const getGlobalData = () => async dispatch => {
+	const { data } = await axios.get(`/api/getdata/global/`);
 
-export const getGlobalData = () => async (dispatch) => {
-    const { data } = await axios.get(`/api/getdata/global/`)
+	dispatch({
+		type: "GLOBAL_DATA_REQUEST",
+		payload: data,
+	});
+};
 
-    dispatch({
-        type: 'GLOBAL_DATA_REQUEST',
-        payload: data
-    })
-}
-
-
-export const clearDataFromState = () => async (dispatch) => {
-    dispatch({
-        type: 'CLEAR_DATA_FROM_STATE'
-    })
-}
+export const clearDataFromState = () => async dispatch => {
+	await dispatch({
+		type: "CLEAR_DATA_FROM_STATE",
+	});
+};

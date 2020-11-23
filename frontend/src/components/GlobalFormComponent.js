@@ -11,6 +11,10 @@ const GlobalFormComponent = () => {
 	const dispatch = useDispatch();
 	const data = useSelector(state => state.data);
 
+	useEffect(() => {
+		dispatch(clearDataFromState());
+	}, [dispatch]);
+
 	const [pws, setPws] = useState("");
 	const [pts, setPts] = useState("");
 
@@ -36,10 +40,6 @@ const GlobalFormComponent = () => {
 	const imageStyle = {
 		width: windowWidth * 0.95,
 	};
-
-	useEffect(() => {
-		dispatch(clearDataFromState());
-	}, [dispatch]);
 
 	return (
 		<div style={{ width: "100%" }}>
@@ -131,18 +131,21 @@ const GlobalFormComponent = () => {
 						justifyContent: "center",
 					}}
 				>
-					{data.map(d =>
-						["new_cases", "new_deaths"].map((k, index) => {
-							return (
-								<ShowDataComponent
-									key={index}
-									dataType={k}
-									data={d["global"][k]}
-									c="global"
-								/>
-							);
-						})
-					)}
+					{data &&
+						data.length > 0 &&
+						Object.keys(data[0])[0] === "global" &&
+						data.map(d =>
+							["new_cases", "new_deaths"].map((k, index) => {
+								return (
+									<ShowDataComponent
+										key={index}
+										dataType={k}
+										data={d["global"][k]}
+										c="global"
+									/>
+								);
+							})
+						)}
 				</div>
 			</div>
 		</div>

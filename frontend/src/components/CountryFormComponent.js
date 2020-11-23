@@ -87,8 +87,16 @@ const CountryFormComponent = ({ isCountry }) => {
 	};
 
 	useEffect(() => {
+		console.log("country form use efffect called");
 		dispatch(clearDataFromState());
 	}, [dispatch]);
+
+	useEffect(() => {
+		return () => {
+			console.log("componnet will unmount");
+			dispatch(clearDataFromState());
+		};
+	}, []);
 
 	return (
 		<div style={{ width: "100%" }}>
