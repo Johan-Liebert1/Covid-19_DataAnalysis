@@ -1,18 +1,23 @@
-import React from 'react'
-
-import CountryFormComponent from '../components/CountryFormComponent'
-import NavbarComponent from '../components/NavbarComponent'
+import React from "react";
+import { motion } from "framer-motion";
+import { routeAnimation } from "../animations";
+import CountryFormComponent from "../components/CountryFormComponent";
 
 const CountryScreen = () => {
-    const mainStyle = { width: '100%' }
+	const mainStyle = { width: "100%", overflow: "hidden" };
 
-    return (
-        <div style = {mainStyle}  className = 'mb-5'>
-            <NavbarComponent />
+	return (
+		<motion.div
+			style={mainStyle}
+			className="mb-5"
+			variants={routeAnimation}
+			initial="hidden"
+			animate="showing"
+			exit="exit"
+		>
+			<CountryFormComponent isCountry />
+		</motion.div>
+	);
+};
 
-            <CountryFormComponent isCountry />
-        </div>
-    )
-}
-
-export default CountryScreen
+export default CountryScreen;

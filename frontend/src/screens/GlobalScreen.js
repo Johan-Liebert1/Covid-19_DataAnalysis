@@ -1,18 +1,21 @@
-import React from 'react'
-import GlobalFormComponent from '../components/GlobalFormComponent'
-
-import NavbarComponent from '../components/NavbarComponent'
-import '../styles/GlobalScreenStyles.css'
-
+import React from "react";
+import GlobalFormComponent from "../components/GlobalFormComponent";
+import { motion } from "framer-motion";
+import { routeAnimation } from "../animations";
+import "../styles/GlobalScreenStyles.css";
 
 const GlobalScreen = () => {
-    return (
-        <div  className = 'mb-5'>
-            <NavbarComponent />
+	return (
+		<motion.div
+			className="mb-5"
+			variants={routeAnimation}
+			initial="hidden"
+			animate="showing"
+			exit="exit"
+		>
+			<GlobalFormComponent />
+		</motion.div>
+	);
+};
 
-            <GlobalFormComponent />
-        </div>
-    )
-}
-
-export default GlobalScreen
+export default GlobalScreen;

@@ -1,5 +1,8 @@
 import React from "react";
+import { motion } from "framer-motion";
+
 import { color_config } from "../constants";
+import { growAnimation } from "../animations";
 
 const commaSeperatedNumbers = num => {
 	if (typeof num !== String) {
@@ -110,7 +113,13 @@ const ShowDataComponent = ({ dataType, data, c }) => {
 	}
 
 	return (
-		<div style={divStyles} className="col-10 col-md-9 col-lg-5 p-5 mb-4">
+		<motion.div
+			variants={growAnimation}
+			initial="hidden"
+			animate="showing"
+			style={divStyles}
+			className="col-10 col-md-9 col-lg-5 p-5 mb-4"
+		>
 			{c === "global" ? (
 				<h3 className="mb-3">Global {color_config[dataType].heading}</h3>
 			) : (
@@ -128,7 +137,7 @@ const ShowDataComponent = ({ dataType, data, c }) => {
 			>
 				{content}
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

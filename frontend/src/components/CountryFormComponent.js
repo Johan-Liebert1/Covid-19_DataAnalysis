@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { clearDataFromState, getContinentData, getCountryData } from "../actions/mainActions";
 import { countries, plotType, plotWhat, mapping, continents } from "../constants";
 
 import "../styles/CountryFormStyles.css";
 import ShowDataComponent from "./ShowDataComponent";
+import { growAnimation } from "../animations";
 
 const CountryFormComponent = ({ isCountry }) => {
 	const initial = isCountry ? countries[0] : continents[0];
@@ -35,7 +38,6 @@ const CountryFormComponent = ({ isCountry }) => {
 		if (cArray.length > 1 && mapping[plotWhatState] === "all") {
 			console.log("Error");
 		} else {
-			setShowImage(true);
 			setC(country.toLowerCase());
 			setPws(plotWhatState);
 			setPts(plotTypeState);
@@ -51,6 +53,10 @@ const CountryFormComponent = ({ isCountry }) => {
 					cArray.map(c => dispatch(getContinentData(c.toLowerCase())));
 				}
 			}
+
+			setTimeout(() => {
+				setShowImage(true);
+			}, 700);
 		}
 	};
 
@@ -242,65 +248,101 @@ const CountryFormComponent = ({ isCountry }) => {
 					))}
 			</div>
 
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					marginBottom: "3rem",
-				}}
-			>
-				{mapping[pws] === "all" && (
-					<h1 style={{ color: "white", margin: "2rem auto" }}>
-						Stats for {c.toUpperCase()}
-					</h1>
-				)}
+			<AnimatePresence>
+				<motion.div
+					variants={growAnimation}
+					initial="hidden"
+					animate="showing"
+					exit="exit"
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						marginBottom: "3rem",
+					}}
+				>
+					{mapping[pws] === "all" && (
+						<motion.h1
+							variants={growAnimation}
+							initial="hidden"
+							animate="showing"
+							exit="exit"
+							style={{ color: "white", margin: "2rem auto" }}
+						>
+							Stats for {c.toUpperCase()}
+						</motion.h1>
+					)}
 
-				{showImage ? (
-					isCountry ? (
+					{showImage ? (
+						isCountry ? (
+							cArray.length > 1 ? (
+								<motion.img
+									variants={growAnimation}
+									initial="hidden"
+									animate="showing"
+									exit="exit"
+									src={`api/plotdata/countries/${mapping[pws]}/${
+										mapping[pts]
+									}?countries=${join()}`}
+									alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
+									style={imageStyle}
+								/>
+							) : mapping[pws] === "all" ? (
+								<motion.img
+									variants={growAnimation}
+									initial="hidden"
+									animate="showing"
+									exit="exit"
+									src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
+									alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
+									style={imageStyle}
+								/>
+							) : (
+								<motion.img
+									variants={growAnimation}
+									initial="hidden"
+									animate="showing"
+									exit="exit"
+									src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
+									alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
+								/>
+							)
+						) : // isCountry == false
 						cArray.length > 1 ? (
-							<img
-								src={`api/plotdata/countries/${mapping[pws]}/${
+							<motion.img
+								variants={growAnimation}
+								initial="hidden"
+								animate="showing"
+								exit="exit"
+								src={`api/plotdata/continents/${mapping[pws]}/${
 									mapping[pts]
-								}?countries=${join()}`}
+								}?conts=${join()}`}
 								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
 								style={imageStyle}
 							/>
 						) : mapping[pws] === "all" ? (
-							<img
-								src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
+							<motion.img
+								variants={growAnimation}
+								initial="hidden"
+								animate="showing"
+								exit="exit"
+								src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
 								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
 								style={imageStyle}
 							/>
 						) : (
-							<img
-								src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
+							<motion.img
+								variants={growAnimation}
+								initial="hidden"
+								animate="showing"
+								exit="exit"
+								src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
 								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
 							/>
 						)
-					) : // isCountry == false
-					cArray.length > 1 ? (
-						<img
-							src={`api/plotdata/continents/${mapping[pws]}/${
-								mapping[pts]
-							}?conts=${join()}`}
-							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
-							style={imageStyle}
-						/>
-					) : mapping[pws] === "all" ? (
-						<img
-							src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
-							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
-							style={imageStyle}
-						/>
-					) : (
-						<img
-							src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
-							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
-						/>
-					)
-				) : null}
-			</div>
+					) : null}
+				</motion.div>
+			</AnimatePresence>
 
 			<div className="container">
 				{data && (

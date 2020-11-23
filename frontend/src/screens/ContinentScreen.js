@@ -1,14 +1,20 @@
-import React from 'react'
-import CountryFormComponent from '../components/CountryFormComponent'
-import NavbarComponent from '../components/NavbarComponent'
+import React from "react";
+import CountryFormComponent from "../components/CountryFormComponent";
+import { motion } from "framer-motion";
+import { routeAnimation } from "../animations";
 
 const ContinentScreen = () => {
-    return (
-        <div className = 'mb-5'>
-            <NavbarComponent />
-            <CountryFormComponent isCountry = {false} />
-        </div>
-    )
-}
+	return (
+		<motion.div
+			className="mb-5"
+			variants={routeAnimation}
+			initial="hidden"
+			animate="showing"
+			exit="exit"
+		>
+			<CountryFormComponent isCountry={false} />
+		</motion.div>
+	);
+};
 
-export default ContinentScreen
+export default ContinentScreen;

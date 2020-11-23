@@ -1,29 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import NavbarComponent from '../components/NavbarComponent'
-import axios from 'axios'
-// import mpld3 from 'mpld3'
+import React from "react";
+import { motion } from "framer-motion";
+import { routeAnimation } from "../animations";
 
 const HomeScreen = () => {
-    const [figJson, setFigJson] = useState('')
+	return (
+		<motion.div variants={routeAnimation} initial="hidden" animate="showing" exit="exit">
+			<p style={{ color: "white" }}>This is home</p>
+			homehomehome
+		</motion.div>
+	);
+};
 
-    const fetchData = async () => {
-        const { data } = await axios.get('/api')
-        console.log(data)
-        setFigJson(data)
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    return (
-        <div>
-            <NavbarComponent />
-            <p>
-                {figJson}
-            </p>
-        </div>
-    )
-}
-
-export default HomeScreen
+export default HomeScreen;
