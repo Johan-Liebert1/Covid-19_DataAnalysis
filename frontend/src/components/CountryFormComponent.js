@@ -23,9 +23,10 @@ const CountryFormComponent = ({ isCountry }) => {
 	const windowWidth = window.innerWidth;
 
 	const dispatch = useDispatch();
-	const data = useSelector((state) => state.data);
+	const data = useSelector(state => state.data);
 
-	const submitHandler = async (e) => {
+	const submitHandler = async e => {
+		dispatch(clearDataFromState());
 		setShowImage(false);
 
 		e.preventDefault();
@@ -40,14 +41,20 @@ const CountryFormComponent = ({ isCountry }) => {
 			setPts(plotTypeState);
 
 			if (isCountry) {
-				dispatch(getCountryData(country.toLowerCase()));
+				if (cArray.length === 0) dispatch(getCountryData(country.toLowerCase()));
+				else {
+					cArray.map(c => dispatch(getCountryData(c.toLowerCase())));
+				}
 			} else {
-				dispatch(getContinentData(country.toLowerCase()));
+				if (cArray.length === 0) dispatch(getContinentData(country.toLowerCase()));
+				else {
+					cArray.map(c => dispatch(getContinentData(c.toLowerCase())));
+				}
 			}
 		}
 	};
 
-	const pushToArrayC = (e) => {
+	const pushToArrayC = e => {
 		setCountry(e.target.value);
 
 		if (mapping[plotWhatState] !== "all" && compare) {
@@ -55,8 +62,8 @@ const CountryFormComponent = ({ isCountry }) => {
 		}
 	};
 
-	const popFromArrayC = (e) => {
-		setCArray(cArray.filter((c) => c !== e.target.innerText));
+	const popFromArrayC = e => {
+		setCArray(cArray.filter(c => c !== e.target.innerText));
 	};
 
 	const imageStyle = {
@@ -75,7 +82,7 @@ const CountryFormComponent = ({ isCountry }) => {
 
 	useEffect(() => {
 		dispatch(clearDataFromState());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div style={{ width: "100%" }}>
@@ -135,7 +142,7 @@ const CountryFormComponent = ({ isCountry }) => {
 						<label htmlFor="country">Select Plot</label>
 						<select
 							className="form-control"
-							onChange={(e) => setPlotWhatState(e.target.value)}
+							onChange={e => setPlotWhatState(e.target.value)}
 							style={{
 								backgroundColor: "transparent",
 								color: "white",
@@ -159,7 +166,7 @@ const CountryFormComponent = ({ isCountry }) => {
 						<label htmlFor="country">Select Plot Type</label>
 						<select
 							className="form-control"
-							onChange={(e) => setPlotTypeState(e.target.value)}
+							onChange={e => setPlotTypeState(e.target.value)}
 							style={{
 								backgroundColor: "transparent",
 								color: "white",
@@ -181,7 +188,7 @@ const CountryFormComponent = ({ isCountry }) => {
 				</div>
 
 				<div className="form-row">
-					<div className="col-md-2 form-group ml-4">
+					<div className="col-md-2 col-10 form-group ml-4">
 						<input
 							type="checkbox"
 							className="form-check-input"
@@ -259,11 +266,16 @@ const CountryFormComponent = ({ isCountry }) => {
 								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
 								style={imageStyle}
 							/>
+						) : mapping[pws] === "all" ? (
+							<img
+								src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
+								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
+								style={imageStyle}
+							/>
 						) : (
 							<img
 								src={`api/plotdata/country/${c}/${mapping[pws]}/${mapping[pts]}`}
 								alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
-								style={mapping[pws] === "all" ? imageStyle : {}}
 							/>
 						)
 					) : // isCountry == false
@@ -275,34 +287,46 @@ const CountryFormComponent = ({ isCountry }) => {
 							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
 							style={imageStyle}
 						/>
+					) : mapping[pws] === "all" ? (
+						<img
+							src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
+							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
+							style={imageStyle}
+						/>
 					) : (
 						<img
 							src={`api/plotdata/continent/${c}/${mapping[pws]}/${mapping[pts]}`}
 							alt={`${c}-${mapping[pws]}-${mapping[pts]}`}
-							style={mapping[pws] === "all" ? imageStyle : {}}
 						/>
 					)
 				) : null}
 			</div>
 
 			<div className="container">
-				<div
-					className="row"
-					style={{
-						display: "flex",
-						justifyContent: "center",
-					}}
-				>
-					{Object.keys(data).length > 0 &&
-						["new_cases", "new_deaths"].map((k, index) => (
-							<ShowDataComponent
-								key={index}
-								dataType={k}
-								data={data[k]}
-								c={country}
-							/>
-						))}
-				</div>
+				{data && (
+					<div
+						className="row"
+						style={{
+							display: "flex",
+							justifyContent: "center",
+						}}
+					>
+						{data.map((d, dIndex) =>
+							["new_cases", "new_deaths"].map((k, index) => {
+								const currentCountry = Object.keys(d)[0];
+
+								return (
+									<ShowDataComponent
+										key={index}
+										dataType={k}
+										data={d[currentCountry][k]}
+										c={currentCountry.toUpperCase()}
+									/>
+								);
+							})
+						)}
+					</div>
+				)}
 			</div>
 		</div>
 	);

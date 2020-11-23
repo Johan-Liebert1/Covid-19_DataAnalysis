@@ -28,4 +28,4 @@ def continent_data(continent):
             f'max_{k}_date': max_stat_date
         }
 
-    return dict_to_return
+    return { continent: dict_to_return}

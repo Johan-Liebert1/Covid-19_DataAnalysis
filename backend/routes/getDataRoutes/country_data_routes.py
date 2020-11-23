@@ -33,4 +33,4 @@ def country_data(country):
             f'max_{key[index]}_date': max_stat_date
         }
 
-    return dict_to_return
+    return { country: dict_to_return}
