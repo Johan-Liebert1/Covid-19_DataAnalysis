@@ -17,12 +17,12 @@ def continent_data(continent):
         stat = np.array(stat)
         max_index = np.argmax(stat)
         max_stat = int(stat[max_index])
-        max_stat_date = str(dates[max_index])
+        max_stat_date = str(dates[max_index]).split('T')[0]
 
         total = int(stat.sum())
 
         dict_to_return[k] = {
-            f'first_{k}_date': str(dates[0]),
+            f'first_{k}_date': str(dates[0]).split('T')[0],
             'total' : total,
             'maximum': max_stat,
             f'max_{k}_date': max_stat_date

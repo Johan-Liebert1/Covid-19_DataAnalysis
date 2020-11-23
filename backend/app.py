@@ -29,10 +29,10 @@ app.register_blueprint(global_data_routes, url_prefix = '/api/getdata/global')
 
 
 # for deployment
-@app.route('/')
-def serve_index():
-    os.makedirs('temp', exist_ok=True)
-    return send_from_directory(app.static_folder, 'index.html')
+# @app.route('/')
+# def serve_index():
+#     os.makedirs('temp', exist_ok=True)
+#     return send_from_directory(app.static_folder, 'index.html')
 
 
 if __name__ == "__main__":
