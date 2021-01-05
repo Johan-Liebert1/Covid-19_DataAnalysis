@@ -1,6 +1,6 @@
 Data donwloaded from https://covid19.who.int/table
 
-Download the Data and the Notebook to view any statistic for any country of your choice.
+Hosted on - https://covid19-data-viz.herokuapp.com/
 
 # Global Data
 
@@ -29,15 +29,15 @@ Download the Data and the Notebook to view any statistic for any country of your
 # Country Data
 
 ### 1. Certain data for many countries line plot
-![image](Notebooks\demoimages\1_certain_data_for_countries.png)
+![image](Notebooks/demoimages/1_certain_data_for_countries.png)
 
 ### 2. Certain data for many countries bar plot
-![image](Notebooks\demoimages\2_certain_data_for_countries_bar.png)
+![image](Notebooks/demoimages/2_certain_data_for_countries_bar.png)
 
 
 ### 3. All Data for a country
 *line plot also available*
-![image](Notebooks\demoimages\3_all_data_for_a_country.png)
+![image](Notebooks/demoimages/3_all_data_for_a_country.png)
 
 
 # Pie Chart
